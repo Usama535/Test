@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Adding Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+    <!-- <link rel="manifest" href="images/favicon/site.webmanifest"> -->
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+<!-- Adding CSS -->
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="mobile.css">
+
+    <title>Xudo.io | Virtual Debit Card Off-Ramp</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="https://xudo.io/index.html"><img src="images/logo1.png" id="logo" alt="Xudo"></a>
+        <ul class="dark">
+            <!-- <li><button id="theme-btn"><img src="images/theme.webp" alt=""></button></li> -->
+            <li><a class="mobile-li" href="https://xudo.io/help.html">HELP</a></li>
+            <li><a class="mobile-li" href="https://xudo.io">EXCHANGE</a></li>
+            <li><a class="mobile-li" href="https://wallet.xudo.io">WALLET</a></li>
+        </ul>
+    </nav>
+
+    <!-- Mobile Navbar -->
+    <nav class="mobile-navbar">
+        <a href="./index.html"><img src="images/logo1.png" id="logo-2" alt="Xudo"></a>
+        <button id="hamburger"><i class="fa-solid fa-bars"></i></button>
+        <ul id="dark">
+            <button id="hamburger-2"><i class="fa-solid fa-x"></i></button>
+            <li><a href="./index.html"><img src="images/logo1.png" id="logo-3" alt="Xudo"></a></li>
+            <li><a class="mobile-li" href="https://xudo.io/help.html">HELP</a></li>
+            <li><a class="mobile-li" href="https://xudo.io">EXCHANGE</a></li>
+            <li><a class="mobile-li" href="https://wallet.xudo.io">WALLET</a></li>
+        </ul>
+    </nav>
+
+     <!-- Stack Container -->
+     <div class="wrapper staking">
+      <p class="heading">MASTERCARD DEBIT CARD OFF-RAMP</p>
+		<p>Purchase cards</p>
+	<form id="amountForm" method="post" action="order.php">
+        <div class="qr-code full-width">
+            <input type="text" placeholder="Amount" pattern="[0-9]*" id="amount" name="amount" min="5" max="1000" required>
+            <button class="btn qr-code-btn"><img src="images/usd.png" class="qr-code-img" alt=""></button>
+        </div>
+    <br>
+        <div class="qr-code full-width">
+		<input type="email" placeholder="Your e-mail address" id="email" name="email" required>
+				<button class="btn qr-code-btn"><img src="images/email.png" class="qr-code-img" alt=""></button>
+		</div>
+    <br>
+		<input type="button" value="DEPOSIT" onclick="submitForm()">
+	</form>
+	<script>
+		function submitForm() {
+			var amount = document.getElementById("amount").value;
+			var email = document.getElementById("email").value;
+
+			// Check if amount and email are valid
+			if (isValidAmount(amount) && isValidEmail(email)) {
+	    // Send email using XMLHttpRequest()
+        var xhr = new XMLHttpRequest();
+        var url = "order.php";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Email sent successfully, redirect to custom link
+                var link = "https://card.xudo.io/pay/pay.php?checkout_id=custom-123&price=" + (parseFloat(amount) * 1.02 + 10) + "&external_reference=" + (email);
+                window.location.replace(link);
+            } else if (xhr.readyState == 4 && xhr.status != 200) {
+                // Email failed to send, display an error message
+                alert("There was a problem creating order. Please try again later.");
+            }
+        };
+        var params = "amount=" + amount + "&email=" + email;
+        xhr.send(params);
+				window.location.replace(link);
+			} else if (!amount) {
+				alert("Please enter the amount.");
+			} else if (!isValidAmount(amount)) {
+				alert("Please enter a whole number between 5 and 1000 for the amount.");
+			} else {
+				alert("Please enter a valid email address.");
+			}
+		}
+
+		function isValidAmount(amount) {
+			// Check if amount is a whole number
+			var regex = /^[1-9]\d*$/;
+			return regex.test(amount) && amount >= 5 && amount <= 1000;
+		}
+
+		function isValidEmail(email) {
+			// Simple email validation using regex
+			var regex = /\S+@\S+\.\S+/;
+			return regex.test(email);
+		}
+	</script>
+  <p>Fee: $10 + 2%</p>
+  </div>
+
+    <!-- Container -->
+    <div class="max-width container-3">
+        <div class="container-3-box">
+            <img src="images/card.png" alt="">
+        </div>
+        <div class="container-3-box">
+            <h1>Xudo Mastercard Debit Card</h1>
+            <p>Trezor is the original hardware wallet. Humans can shift between crypto assets using Xudo.ai in Trezor Suite, without leaving the app.
+                <br><br>
+                To use Xudo.ai with your Trezor, open Trezor Suite, visit the Trade tab and follow the prompts. Good job! </p>
+        </div>
+    </div>
+
+     <!-- footer -->
+     <div class="footer">
+        <div class="footer-container">
+            <div class="left-box">
+                <!-- <p class="heading">XUDO.IO</p> -->
+                <img id="footer-logo" src="images/logo1.png" alt="">
+                <p>The No Sign-Up Crypto Exchange. Exchange between BTC, ETH, BCH, XMR, XAI and 80+ other cryptocurrencies, no account required.</p>
+                <div class="social-media">
+                    <a href="https://twitter.com/xudoio"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="https://t.me/xudoio"><i class="fa-brands fa-telegram"></i></a>
+                </div>
+            </div>
+            <div class="right-box">
+                <ul>
+                    <li><a href="#">Buy XUDO</a></li>
+                    <li><a href="#">XUDO Chart</a></li>
+                    <li><a href="#">XUDO Contract</a></li>
+                    <li><a href="https://docs.xudo.io">Docs</a></li>
+                </ul>
+                <ul>
+                    <li><a href="#">Off-Ramp</a></li>
+                    <li><a href="https://wallet.xudo.io">Wallet</a></li>
+							<li><a href="https://xudo.io">Exchange</a></li>
+                    <li><a href="https://xudo.io/help.html">Help</a></li>
+                </ul>
+                <!-- <ul>
+                    <li>LISTED COINS</li>
+                    <li>XAI WHITE PAPER</li>
+                    <li>STATISTICS</li>
+                    <li>RESEARCH</li>
+                </ul> -->
+            </div>
+        </div>
+     </div>
+    <!-- Copywright -->
+    <div class="copy-right">
+        <p><a href="#">&copy; Terms and Conditions</a></p>
+    </div>
+
+
+<script src="script.js"></script>
+<script src="https://kit.fontawesome.com/70dcef7578.js" crossorigin="anonymous"></script>
+</body>
+</html>
